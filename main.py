@@ -52,13 +52,39 @@ async def add_map(request: Request):
 @app.get("/api/maps/{map_id}")
 async def get_map_data(map_id: str):
     # returns the map name, map ID, room_id, and map URL for the map with the matching map ID
-    pass
+    cursor.execute('SELECT id, name, url, room_id FROM maps WHERE id = ?', (map_id,))
+    result = cursor.fetchone()
+
+    if result is None:
+        return {"success": False, "error": "Map not found."}
+    return {
+        "success": True,
+        "map_id": result[0],
+        "map_name": result[1],
+        "map_url": result[2],
+        "room_id": result[3]
+        }
 
 @app.get("/api/rooms/{room_id}/maps")
 async def get_maps_in_room(room_id: str):
     # returns an array of all maps with matching room ID
     # each map in the array should include the map name, map ID, room_id, and map URL
-    pass
+    cursor.execute('SELECT id, name, url, room_id FROM maps WHERE room_id = ?', (room_id,))
+
+    results = cursor.fetchall()
+    maps = []
+
+    for result in results:
+        maps.append({
+            "map_id": result[0],
+            "map_name": result[1],
+            "map_url": result[2],
+            "room_id": result[3]
+            })
+    return { 
+            "success": True,
+            "maps": maps
+           }
 
 @app.get('/uploads/{map_filename}')
 async def get_map(map_filename: str):
