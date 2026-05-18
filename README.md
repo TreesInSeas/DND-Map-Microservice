@@ -17,7 +17,7 @@ pip install -r requirements.txt
 
 ## Run
 
-python main.py
+main.py
 
 The service runs at:
 
@@ -94,4 +94,4 @@ Example response:
 
 ## Test
 
-python client_example.py
+client_example.py
