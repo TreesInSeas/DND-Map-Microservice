@@ -1,3 +1,8 @@
 pillow
 fastapi
 uvicorn
+fastapi
+uvicorn
+pillow
+python-multipart
+requests
